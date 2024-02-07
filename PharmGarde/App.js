@@ -1,17 +1,23 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,Button, Image, TouchableOpacity } from 'react-native';
+import SignUpScreen from './SignUpScreen';
+import SignInScreen from './SignInScreen';
 
 // Écran d'accueil de l'application
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Hello World! My name is amina</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
-        <Image source={require('./assets/991ce665cc7d0ee9b05e6881e5dab431.png')} style={styles.menuIcon} />
-      </TouchableOpacity>
+    <Text>Welcome To PharmGarde</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
+      <Image source={require('./assets/991ce665cc7d0ee9b05e6881e5dab431.png')} style={styles.menuIcon} />
+    </TouchableOpacity>
+    <View style={styles.Button}>
+    <Button  title="Sign In" onPress={() => navigation.navigate('SignIn')} />
+    <Button  title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
     </View>
+  </View>
   );
 }
 
@@ -29,11 +35,13 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'PharmGarde', headerTitleAlign: 'center' }} />
-        <Stack.Screen name="Menu" component={MenuScreen} options={{ title: 'Menu', headerTitleAlign: 'center' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'PharmGarde', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="Menu" component={MenuScreen} options={{ title: 'Menu', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="SignIn" component={SignInScreen} options={{ title: 'Sign In', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: 'Sign Up', headerTitleAlign: 'center' }} />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 
@@ -49,4 +57,8 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 10,
   },
+  Button:{
+    display:'flex',
+    gap:5,
+  }
 });
