@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'; 
+import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native'; 
+import Logo from './assets/991ce665cc7d0ee9b05e6881e5dab431.png';
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -12,7 +13,9 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Sign Up </Text>
+      <Image source={Logo} style={styles.logo} />
+
+      <Text>Sign Up</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -49,5 +52,10 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginVertical: 10,
+  },
+  logo: {
+    width: 150, 
+    height: 150, 
+    marginBottom: 20, 
   },
 });
