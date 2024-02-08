@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View,Button, Image, TouchableOpacity } from 'react-native';
 import SignUpScreen from './SignUpScreen';
 import SignInScreen from './SignInScreen';
+import PharmacyScreen from './PharmacyScreen';
 
 // Écran d'accueil de l'application
 function HomeScreen({ navigation }) {
@@ -14,6 +15,7 @@ function HomeScreen({ navigation }) {
     <View style={styles.Button}>
     <Button  title="Sign In" onPress={() => navigation.navigate('SignIn')} />
     <Button  title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
+    <Button  title="Pharmacy" onPress={() => navigation.navigate('Pharmacy')} />
     </View>
   </View>
   );
@@ -37,6 +39,7 @@ export default function App() {
       <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'PharmGarde', headerTitleAlign: 'center' }} />
       <Stack.Screen name="SignIn" component={SignInScreen} options={{ title: 'Sign In', headerTitleAlign: 'center' }} />
       <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: 'Sign Up', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="Pharmacy" component={PharmacyScreen} options={{ title: 'Pharmacy', headerTitleAlign: 'center' }} />
     </Stack.Navigator>
   </NavigationContainer>
   );
