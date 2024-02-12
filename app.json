@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "PharmGarde",
-    "slug": "PharmGarde",
+    "name": "Pharmacy",
+    "slug": "Pharmacy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/991ce665cc7d0ee9b05e6881e5dab431.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
