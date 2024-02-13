@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, KeyboardAvoidingView } from 'react-native'; 
 import Logo from '../assets/991ce665cc7d0ee9b05e6881e5dab431.png';
 import {createUserWithEmailAndPassword , getAuth } from "firebase/auth"
+import { auth } from '../firebase'; 
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState('');
