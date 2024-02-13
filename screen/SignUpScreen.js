@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native'; 
-import Logo from './assets/991ce665cc7d0ee9b05e6881e5dab431.png';
+import { View, Text, TextInput, Button, Image, StyleSheet, KeyboardAvoidingView } from 'react-native'; 
+import Logo from '../assets/991ce665cc7d0ee9b05e6881e5dab431.png';
+import {createUserWithEmailAndPassword , getAuth } from "firebase/auth"
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const auth = getAuth();
   const handleSignUp = () => {
-    console.log("Inscription avec : ", username, email, password);
+    createUserWithEmailAndPassword(auth , email, password) 
+    .then(userCredentials =>{
+      const user = userCredentials.user;
+      console.log(user.email); 
+    })
+    .catch(error => alert(error.message))
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Image source={Logo} style={styles.logo} />
 
       <Text>Sign Up</Text>
@@ -36,7 +43,7 @@ export default function SignUpScreen({ navigation }) {
         onChangeText={text => setPassword(text)}
       />
       <Button title="Sign Up" onPress={handleSignUp} />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

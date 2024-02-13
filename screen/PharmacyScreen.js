@@ -31,7 +31,7 @@ export default function AddPharmacyForm({ onSubmit }) {
 
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/991ce665cc7d0ee9b05e6881e5dab431.png')} style={styles.logo} />
+      <Image source={require('../assets/991ce665cc7d0ee9b05e6881e5dab431.png')} style={styles.logo} />
       <Text style={styles.addPharmacyText}>Ajouter une pharmacie</Text>
       <Text style={styles.label}>Nom :</Text>
       <TextInput
