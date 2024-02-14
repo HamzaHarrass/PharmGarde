@@ -1,63 +1,25 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 export default function AddPharmacyForm({ onSubmit }) {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [openingHours, setOpeningHours] = useState('');
 
-  const handleSubmit = () => {
-    // Vérification des champs obligatoires
-    if (!name || !address || !phoneNumber || !openingHours) {
-      alert('Veuillez remplir tous les champs.');
-      return;
-    }
+  const handlePress = () => {
+    // Supposons que vous récupériez les informations de l'image et de l'adresse de la pharmacie depuis une source externe ou d'une autre manière
+    const pharmacyImage = require('../assets/131a67b1-7653-4147-ae71-f51c6038240a-1.png'); // Remplacez cet exemple par le chemin de votre image de pharmacie
+    const pharmacyAddress = "123 rue de la pharmacie, Ville";
 
-    const newPharmacy = {
-      name,
-      address,
-      phoneNumber,
-      openingHours,
-    };
-
-    onSubmit(newPharmacy);
-
-    setName('');
-    setAddress('');
-    setPhoneNumber('');
-    setOpeningHours('');
+    // Appel de la fonction onSubmit avec les informations de l'image et de l'adresse de la pharmacie
+    onSubmit(pharmacyImage, pharmacyAddress);
   };
 
   return (
     <View style={styles.container}>
       <Image source={require('../assets/991ce665cc7d0ee9b05e6881e5dab431.png')} style={styles.logo} />
-      <Text style={styles.addPharmacyText}>Ajouter une pharmacie</Text>
-      <Text style={styles.label}>Nom :</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={text => setName(text)}
-      />
-      <Text style={styles.label}>Adresse :</Text>
-      <TextInput
-        style={styles.input}
-        value={address}
-        onChangeText={text => setAddress(text)}
-      />
-      <Text style={styles.label}>Numéro de téléphone :</Text>
-      <TextInput
-        style={styles.input}
-        value={phoneNumber}
-        onChangeText={text => setPhoneNumber(text)}
-      />
-      <Text style={styles.label}>Heures d'ouverture :</Text>
-      <TextInput
-        style={styles.input}
-        value={openingHours}
-        onChangeText={text => setOpeningHours(text)}
-      />
-      <Button title="Ajouter" onPress={handleSubmit} />
+      <Text style={styles.addPharmacyText}>pharmacie</Text>
+      <TouchableOpacity onPress={handlePress}>
+        <Image source={require('../assets/131a67b1-7653-4147-ae71-f51c6038240a-1.png')} style={styles.pharmacyImage} />
+        <Text style={styles.pharmacyAddress}>123 rue de la pharmacie, Ville</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -77,16 +39,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  label: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
+  pharmacyImage: {
+    width: 200,
+    height: 200,
     marginBottom: 10,
-    width: '100%', 
+  },
+  pharmacyAddress: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

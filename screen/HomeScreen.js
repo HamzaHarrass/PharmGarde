@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 const CustomButton = ({ title, onPress }) => {
   return (
-    <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -12,15 +12,14 @@ const CustomButton = ({ title, onPress }) => {
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome To PharmGarde</Text>
+      <Text style={styles.welcomeText}>Welcome To PharmGarde </Text>
       <Image
         source={require('../assets/991ce665cc7d0ee9b05e6881e5dab431.png')}
         style={styles.menuIcon}
       />
       <View style={styles.buttonContainer}>
-        {/* <CustomButton title="Sign In" onPress={() => navigation.navigate('SignIn')} />
+        <CustomButton title="Sign In" onPress={() => navigation.navigate('SignIn')} />
         <CustomButton title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
-        <CustomButton title="Pharmacy" onPress={() => navigation.navigate('Pharmacy')} /> */}
       </View>
     </View>
   );
@@ -43,13 +42,21 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 20,
   },
+  button:{
+    backgroundColor: '#6FCF97',
+    width:'100%',
+    padding: 5 ,
+    borderRadius: 8
+  },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap:8,
+    justifyContent: 'space-around',
     width: '80%',
+     // Ajoutez une couleur de fond pour les boutons
   },
   buttonText: {
     fontSize: 16,
     color: 'white',
+    textAlign:'center' // Assurez-vous que la couleur du texte est visible sur le fond
   },
 });
