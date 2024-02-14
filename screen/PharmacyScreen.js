@@ -1,52 +1,48 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import data from '../data';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function AddPharmacyForm({ onSubmit }) {
-
-  const handlePress = () => {
-    // Supposons que vous récupériez les informations de l'image et de l'adresse de la pharmacie depuis une source externe ou d'une autre manière
-    const pharmacyImage = require('../assets/131a67b1-7653-4147-ae71-f51c6038240a-1.png'); // Remplacez cet exemple par le chemin de votre image de pharmacie
-    const pharmacyAddress = "123 rue de la pharmacie, Ville";
-
-    // Appel de la fonction onSubmit avec les informations de l'image et de l'adresse de la pharmacie
-    onSubmit(pharmacyImage, pharmacyAddress);
-  };
-
+export default function PharmacyScreen() {
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/991ce665cc7d0ee9b05e6881e5dab431.png')} style={styles.logo} />
-      <Text style={styles.addPharmacyText}>pharmacie</Text>
-      <TouchableOpacity onPress={handlePress}>
-        <Image source={require('../assets/131a67b1-7653-4147-ae71-f51c6038240a-1.png')} style={styles.pharmacyImage} />
-        <Text style={styles.pharmacyAddress}>123 rue de la pharmacie, Ville</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.heading}>Liste des pharmacies</Text>
+      {data.map((pharmacy) => (
+        <TouchableOpacity key={pharmacy.id} style={styles.pharmacyContainer}>
+          <Image source={{ uri: pharmacy.images[0] }} style={styles.pharmacyImage} />
+          <Text style={styles.pharmacyName}>{pharmacy.name}</Text>
+          <Text style={styles.pharmacyAddress}>{pharmacy.address}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
-    alignItems: 'center',
   },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
-  addPharmacyText: {
+  heading: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  pharmacyContainer: {
+    marginBottom: 20,
+    alignItems: 'center',
   },
   pharmacyImage: {
     width: 200,
     height: 200,
     marginBottom: 10,
   },
+  pharmacyName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
   pharmacyAddress: {
     fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#888',
   },
 });
