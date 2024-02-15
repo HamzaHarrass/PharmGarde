@@ -6,7 +6,7 @@ import SignInScreen from './screen/SignInScreen';
 import PharmacyScreen from './screen/PharmacyScreen';
 import WelcomeScreen from './screen/welcomeScreen';
 import HomeScreen from './screen/HomeScreen';
-
+import MapViewScreen from './screen/MapViewScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -18,6 +18,7 @@ export default function App() {
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Pharmacy" component={PharmacyScreen} />
+        <Stack.Screen name="MapView" component={MapViewScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

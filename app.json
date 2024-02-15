@@ -4,7 +4,7 @@
     "slug": "Pharmacy",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/991ce665cc7d0ee9b05e6881e5dab431.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/991ce665cc7d0ee9b05e6881e5dab431.png",
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/991ce665cc7d0ee9b05e6881e5dab431.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/991ce665cc7d0ee9b05e6881e5dab431.png"
     }
   }
 }
