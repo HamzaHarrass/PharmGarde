@@ -12,14 +12,24 @@ const CustomButton = ({ title, onPress }) => {
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome To PharmGarde </Text>
-      <Image
-        source={require('../assets/991ce665cc7d0ee9b05e6881e5dab431.png')}
-        style={styles.menuIcon}
-      />
-      <View style={styles.buttonContainer}>
-        <CustomButton title="Sign In" onPress={() => navigation.navigate('SignIn')} />
-        <CustomButton title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
+      <View style={styles.navbar}>
+        <Text style={styles.navbarText}>PharmGarde</Text>
+      </View>
+
+      <View style={styles.content}>
+        <Text style={styles.welcomeText}>Welcome To PharmGarde</Text>
+        <Image
+          source={require('../assets/991ce665cc7d0ee9b05e6881e5dab431.png')}
+          style={styles.menuIcon}
+        />
+        <Text style={styles.description}>
+          This application will display nearby pharmacies on the map.
+        </Text>
+
+        <View style={styles.buttonContainer}>
+          <CustomButton title="Sign In" onPress={() => navigation.navigate('SignIn')} />
+          <CustomButton title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
+        </View>
       </View>
     </View>
   );
@@ -33,6 +43,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  navbar: {
+    backgroundColor: '#6FCF97',
+    width: '100%',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  navbarText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
   welcomeText: {
     fontSize: 20,
     marginBottom: 20,
@@ -42,21 +69,23 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 20,
   },
-  button:{
+  description: {
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  button: {
     backgroundColor: '#6FCF97',
-    width:'100%',
-    padding: 5 ,
-    borderRadius: 8
+    width: '100%',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 10,
   },
   buttonContainer: {
-    gap:8,
-    justifyContent: 'space-around',
-    width: '80%',
-     // Ajoutez une couleur de fond pour les boutons
+    width: '100%',
   },
   buttonText: {
     fontSize: 16,
     color: 'white',
-    textAlign:'center' // Assurez-vous que la couleur du texte est visible sur le fond
+    textAlign: 'center',
   },
 });
