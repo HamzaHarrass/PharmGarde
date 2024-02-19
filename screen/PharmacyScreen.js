@@ -13,7 +13,7 @@ export default function PharmacyScreen({ navigation }) {
       console.log('User logged out successfully');
       navigation.reset({
         index: 0,
-        routes: [{ name: 'SignIn' }],
+        routes: [{ name: 'Home' }],
       });
     } catch (error) {
       console.error('Logout error:', error.message);
