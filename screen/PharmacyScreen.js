@@ -2,22 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import data from '../data';
 import { ScrollView } from 'react-native-gesture-handler';
-export default function PharmacyScreen({ navigation }) {
-  useEffect(() => {
+import { getAuth, signOut } from 'firebase/auth';
 
+export default function PharmacyScreen({ navigation }) {
+  const auth = getAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log('User logged out successfully');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'SignIn' }],
+      });
+    } catch (error) {
+      console.error('Logout error:', error.message);
+      Alert.alert(
+        'Error',
+        error.message,
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+      );
+    }
+  };
+
+  useEffect(() => {
+    // Code exécuté au chargement de l'écran Pharmacy
   }, []);
 
   const handleShowOnMap = (pharmacy) => {
     navigation.navigate('MapView', { pharmacy });
   };
 
-
-
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.navbar}>
         <Text style={styles.navbarText}>Welcome to PharmacieGard</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleLogout}>
           <Text style={styles.logoutButton}>Déconnexion</Text>
         </TouchableOpacity>
       </View>
