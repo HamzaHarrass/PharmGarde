@@ -1,60 +1,74 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, Alert } from 'react-native';
+import { Formik } from 'formik';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../assets/991ce665cc7d0ee9b05e6881e5dab431.png';
 import Pharmacy from "./PharmacyScreen";
 
 export default function SignInScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const auth = getAuth();
 
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-        const user = userCredential.user;
-        console.log("User signed in:", user.email);
-        try {
-          await AsyncStorage.setItem('userToken', user.accessToken);
-          console.log('Token saved successfully!');
-          navigation.navigate('Pharmacy');
-        } catch (error) {
-          console.log('Error saving token:', error);
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Sign in error:", errorCode, errorMessage);
-        Alert.alert(
-          "Error",
-          errorMessage,
-          [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-        );
-      });
+  const handleSignIn = async (values) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+      await AsyncStorage.setItem('userToken', user.accessToken);
+      console.log('User signed in:', user.email);
+      navigation.navigate('Pharmacy');
+    } catch (error) {
+      console.error('Sign in error:', error.code, error.message);
+      Alert.alert(
+        "Error",
+        error.message,
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+      );
+    }
   };
 
   return (
     <View style={styles.container}>
       <Image source={Logo} style={styles.logo} />
 
-      <Text>Sign In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={text => setPassword(text)}
-      />
-      <Button title="Sign In" onPress={handleSignIn} />
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={values => handleSignIn(values)}
+        validate={values => {
+          const errors = {};
+          if (!values.email) {
+            errors.email = 'Required';
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+            errors.email = 'Invalid email address';
+          }
+          if (!values.password) {
+            errors.password = 'Required';
+          }
+          return errors;
+        }}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+            />
+            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
+            />
+            {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+            <Button title="Sign In" onPress={handleSubmit} />
+          </>
+        )}
+      </Formik>
     </View>
   );
 }
@@ -71,6 +85,13 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginVertical: 10,
+    borderRadius: 10,
+    fontSize: 16,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 5,
   },
   logo: {
     width: 150,
