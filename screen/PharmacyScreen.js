@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import data from '../data';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getAuth, signOut } from 'firebase/auth';
 
 export default function PharmacyScreen({ navigation }) {
@@ -34,43 +33,45 @@ export default function PharmacyScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.navbar}>
-        <Text style={styles.navbarText}>Welcome to PharmacieGard</Text>
-        <TouchableOpacity onPress={handleLogout}>
-          <Text style={styles.logoutButton}>Déconnexion</Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={styles.container}>
-        <Text style={styles.heading}>Liste des pharmacies</Text>
-        {data.map((pharmacy) => (
-          <TouchableOpacity key={pharmacy.id} style={styles.pharmacyContainer}>
-            <Image source={{ uri: pharmacy.images[0] }} style={styles.pharmacyImage} />
-            <Text style={styles.pharmacyName}>{pharmacy.name}</Text>
-            <Text style={styles.pharmacyAddress}>{pharmacy.address}</Text>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleShowOnMap(pharmacy)}
-            >
-              <Text style={styles.buttonText}>Afficher sur la carte</Text>
-            </TouchableOpacity>
+    <ImageBackground source={require('../assets/v870-tang-32.jpg')} style={styles.background}>
+      <View style={styles.container}>
+        <View style={styles.navbar}>
+          <Text style={styles.navbarText}>Welcome to PharmacieGard</Text>
+          <TouchableOpacity onPress={handleLogout}>
+            <Text style={styles.logoutButton}>Déconnexion</Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
+        </View>
+        <ScrollView style={styles.scrollView}>
+          {data.map((pharmacy) => (
+            <TouchableOpacity key={pharmacy.id} style={styles.pharmacyContainer}>
+              <Image source={{ uri: pharmacy.images[0] }} style={styles.pharmacyImage} />
+              <Text style={styles.pharmacyName}>{pharmacy.name}</Text>
+              <Text style={styles.pharmacyAddress}>{pharmacy.address}</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleShowOnMap(pharmacy)}
+              >
+                <Text style={styles.buttonText}>Afficher sur la carte</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
   container: {
     flex: 1,
+    paddingTop: 0,
     padding: 20,
   },
-  heading: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
+
   pharmacyContainer: {
     marginBottom: 20,
     alignItems: 'center',
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   button: {
-    backgroundColor: '#6FCF97',
+    backgroundColor: '#009Cff',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -102,17 +103,15 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#6FCF97',
+    padding: 20,
   },
   navbarText: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
   },
   logoutButton: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
   },
