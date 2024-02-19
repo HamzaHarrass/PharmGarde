@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Image ,ImageBackground, StyleSheet, Alert } from 'react-native';
 import { Formik } from 'formik';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,53 +27,65 @@ export default function SignInScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require('../assets/v870-tang-32.jpg')} style={styles.background}>
+      <View style={styles.container}>
       <Image source={Logo} style={styles.logo} />
 
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        onSubmit={values => handleSignIn(values)}
-        validate={values => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = 'Required';
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
-          }
-          if (!values.password) {
-            errors.password = 'Required';
-          }
-          return errors;
-        }}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-          <>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-            />
-            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-            />
-            {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-            <Button title="Sign In" onPress={handleSubmit} />
-          </>
-        )}
-      </Formik>
-    </View>
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          onSubmit={values => handleSignIn(values)}
+          validate={values => {
+            const errors = {};
+            if (!values.email) {
+              errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+              errors.email = 'Invalid email address';
+            }
+            if (!values.password) {
+              errors.password = 'Required';
+            }
+            return errors;
+          }}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+              />
+              {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                secureTextEntry={true}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+              />
+              {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+              <Button title="Sign In" onPress={handleSubmit} />
+            </>
+          )}
+        </Formik>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -82,7 +94,9 @@ const styles = StyleSheet.create({
   input: {
     width: '80%',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#009Cff',
+    color:'black',
+    fontWeight: 'bold',
     padding: 10,
     marginVertical: 10,
     borderRadius: 10,
@@ -92,10 +106,5 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginBottom: 5,
-  },
-  logo: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
   },
 });
