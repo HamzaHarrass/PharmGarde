@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Image, StyleSheet, Alert } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../assets/991ce665cc7d0ee9b05e6881e5dab431.png';
-import Pharmacy from "./PharmacyScreen"
+import Pharmacy from "./PharmacyScreen";
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -12,23 +13,28 @@ export default function SignInScreen({ navigation }) {
 
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log("User signed in:", user.email);
-      navigation.navigate('Pharmacy');
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error("Sign in error:", errorCode, errorMessage);
-      Alert.alert(
-        "Error",
-        errorMessage,
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-      );
-    });
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        console.log("User signed in:", user.email);
+        try {
+          await AsyncStorage.setItem('userToken', user.accessToken);
+          console.log('Token saved successfully!');
+          navigation.navigate('Pharmacy');
+        } catch (error) {
+          console.log('Error saving token:', error);
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Sign in error:", errorCode, errorMessage);
+        Alert.alert(
+          "Error",
+          errorMessage,
+          [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+        );
+      });
   };
-
 
   return (
     <View style={styles.container}>
@@ -67,8 +73,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   logo: {
-    width: 150, 
-    height: 150, 
-    marginBottom: 20, 
+    width: 150,
+    height: 150,
+    marginBottom: 20,
   },
 });
